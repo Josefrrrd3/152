@@ -97,10 +97,10 @@
 					  							<button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">BoostPost</button>
 					  							<button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Publish</button>
 					  							<ul class="pull-left list-inline">
-					  								<li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
+												  	<li><a href=""><i class="glyphicon glyphicon-picture"></i></a></li>
 					  								<li><a href=""><i class="glyphicon glyphicon-star"></i></a></li>
 													<li><a href=""><i class="glyphicon glyphicon-globe"></i></a></li>
-													<li><a href=""><i class="glyphicon glyphicon-picture"></i></a></li>
+													<li><a href=""><i class="glyphicon glyphicon-list-alt"></i></a></li>
 					  							</ul>
 					  						</div>
 					  					</div>
