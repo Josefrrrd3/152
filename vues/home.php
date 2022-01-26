@@ -97,10 +97,14 @@
 					  							<button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">BoostPost</button>
 					  							<button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Publish</button>
 					  							<ul class="pull-left list-inline">
-												  	<li><a href=""><i class="glyphicon glyphicon-picture"></i></a></li>
+												  <label name="fileToUpload" class="imageUpload" for="fileToUpload">
+												  
+					  								<li><a class="imageUpload href=""><i class="imageUpload glyphicon glyphicon-picture"></i></a></li>
+													  </label>
 					  								<li><a href=""><i class="glyphicon glyphicon-star"></i></a></li>
-													<li><a href=""><i class="glyphicon glyphicon-globe"></i></a></li>
-													<li><a href=""><i class="glyphicon glyphicon-list-alt"></i></a></li>
+					  								<li><a href=""><i class="glyphicon glyphicon-globe"></i></a></li>
+					  								<li><a href=""><i class="glyphicon glyphicon-list-alt"></i></a></li>
+					  								<input id="fileToUpload" type="file" name="fileToUpload" style="display: none;">
 					  							</ul>
 					  						</div>
 					  					</div>
