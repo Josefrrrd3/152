@@ -12,6 +12,7 @@ session_start();
 //recuperer la variable uc
 $uc = empty($_GET['uc']) ? "home" : $_GET['uc'];
 //Inclure le header
+require('modeles/connexionDB.php');
 include("vues/header.php");
 //Choisir la page en fonction de uc
 switch ($uc) {
