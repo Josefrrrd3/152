@@ -21,8 +21,8 @@
 						<label name="fileToUpload" class="imageUpload" for="fileToUpload">
 							<li class="imageUpload"><i style="cursor: pointer;" class="imageUpload glyphicon glyphicon-picture"></i></li>
 						</label>
-						<input id="fileToUpload" multiple accept=".jpg,.jpeg,.png" type="file" name="fileToUpload" style="display: none;" onchange="validateFileType()">
-						<li><a href="#"><i class="glyphicon glyphicon-star imageUpload"></i></a></li>
+						<input id="fileToUpload" multiple accept=".jpg,.jpeg,.png" type="file" name="fileToUpload[]" onchange="validateFileType()">
+						<li><a href=""><i class="glyphicon glyphicon-star"></i></a></li>
 						<li><a href=""><i class="glyphicon glyphicon-globe"></i></a></li>
 						<li><a href=""><i class="glyphicon glyphicon-list-alt"></i></a></li>
 					</ul>
