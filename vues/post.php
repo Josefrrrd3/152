@@ -10,7 +10,6 @@
         </div>
         <div class="modal-footer">
             <div>
-            <input id="fileToUpload" multiple accept=".jpg,.jpeg,.png" type="file" name="fileToUpload[]" onchange="validateFileType()">
                 <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">BoostPost</button>
                 <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Publish</button>
                 <ul class="pull-left list-inline">
