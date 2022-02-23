@@ -25,3 +25,4 @@ switch ($uc) {
 }
 //Inclure le footer
 include("vues/footer.php");
+
