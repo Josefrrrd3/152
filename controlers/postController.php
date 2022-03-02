@@ -12,64 +12,57 @@ switch ($action) {
 
         for ($i = 0; $i < $nbFile; $i++) {
 
-            $target_dir = "media/imgdownload/"; // specifies the directory where the file is going to be placed
+            $target_dir = "media/imgdownload/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"][$i]);
-            $uploadOk = 1;
+            $validation = 1;
             $fileToUploadType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-
-            // Check if image file is a actual image or fake image
+            //Verifie si le fichier est bien une image
             if (isset($_POST["submit"])) {
-                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"][$i]);
-                if ($check !== false) {
-                    $message = "File is an image - " . $check["mime"] . ".";
-                    $uploadOk = 1;
+                $verification = getimagesize($_FILES["fileToUpload"]["tmp_name"][$i]);
+                if ($verification !== false) {
+                    $message = "File is an image - " . $verification["mime"] . ".";
+                    $validation = 1;
                 } else {
-                    $message = "File is not an image.";
-                    $uploadOk = 0;
+                    $message = "Le fichier n'est pas une image";
+                    $validation = 0;
                 }
             }
 
-            // Check if file already exists
+            // verifier si le fichier existe deja
             if (file_exists($target_file)) {
-                $message = "Sorry, file already exists.";
-                $uploadOk = 0;
+                $message = "Le fichier existe deja.";
+                $validation = 0;
             }
 
-            // Check file size
+            // verifier la taille du fichier
             if ($_FILES["fileToUpload"]["size"][$i] > 3000000) {
-                $message = "Sorry, your file is too large.";
-                $uploadOk = 0;
+                $message = "Votre fichier est trop grand";
+                $validation = 0;
             }
 
-            // Allow certain file formats
+            // verification php du type de fichier
             if ($fileToUploadType != "jpg" && $fileToUploadType != "png" && $fileToUploadType != "jpeg" && $fileToUploadType != "gif") {
-                $message = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                $uploadOk = 0;
+                $message = "Vous ne pouvez que upload des fichier de type JPG, JPEG, PNG ou GIF";
+                $validation = 0;
             }
 
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                $message = "Sorry, your file was not uploaded.";
-                // if everything is ok, try to upload file
-            } else {
+            // verifier si $validation est a 0 (donc il y a une erreur)
+            if ($validation == 0) {
+                $message = "Le fichier la n'a pas été upload";
+            }
+            //upload si tout est correcte
+            else {
                 createPost($commentaire, date("Y-m-d H:i:s"));
                 createMedia($fileToUploadType, $_FILES["fileToUpload"]["name"][$i], date("Y-m-d H:i:s"));
 
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"][$i], $target_file)) {
-                    $message = "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"][$i])) . " has been uploaded.";
+                    $message = "Le fichier " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"][$i])) . " a été upload.";
                 } else {
-                    $message = "Sorry, there was an error uploading your file.";
+                    $message = "Erreur lors de l'upload du fichier";
                 }
             }
         }
         break;
 }
-
 include('vues/post.php');
-
-
-//var_dump($_FILES);
-
-
-?>
