@@ -10,7 +10,8 @@ function connectDB()
     try {
       $dbc = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, DBUSER, DBPWD, array(
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-        PDO::ATTR_PERSISTENT => true
+        PDO::ATTR_PERSISTENT => true,
+        PDO::ATTR_ERRMODE => pdo::ERRMODE_EXCEPTION
       ));
     }
     // Si une exception est arrivée

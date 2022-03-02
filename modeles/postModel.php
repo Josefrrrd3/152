@@ -2,22 +2,19 @@
 
 function createPost($commentaire, $creationDate)
 {
-    static $ps = null;
     $sql = "INSERT INTO `dbM152`.`post` (`commentaire`, `creationDate`) ";
     $sql .= "VALUES (:COMMENTAIRE, :CREATIONDATE)";
-    if ($ps == null) {
-        $ps = connectDB()->prepare($sql);
-    }
-    $answer = false;
+    $pdo = connectDB();
+    $ps = $pdo->prepare($sql);
     try {
         $ps->bindParam(':COMMENTAIRE', $commentaire, PDO::PARAM_STR);
         $ps->bindParam(':CREATIONDATE', $creationDate, PDO::PARAM_STR);
         //$ps->bindParam(':CREATIONDATE', $creationDate, date("Y-m-d H:i:s"));
-        $answer = $ps->execute();
+        $ps->execute();
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
-    return $answer;
+    return $pdo->lastInsertId();
 }
 
 /**
@@ -81,11 +78,11 @@ function deletePost($idPost)
  * @param mixed $creationDate  La date de création du média
  * @return bool true si réussi
  */
-function createMedia($typeMedia, $nomMedia, $creationDate)
+function createMedia($typeMedia, $nomMedia, $creationDate, $idPost)
 {
     static $ps = null;
-    $sql = "INSERT INTO `dbM152`.`media` (`typeMedia`, `nomMedia`, `creationDate`) ";
-    $sql .= "VALUES (:TYPEMEDIA, :NOMMEDIA, :CREATIONDATE)";
+    $sql = "INSERT INTO `dbM152`.`media` (`typeMedia`, `nomMedia`, `creationDate`, `idPost`) ";
+    $sql .= "VALUES (:TYPEMEDIA, :NOMMEDIA, :CREATIONDATE, :IDPOST)";
     if ($ps == null) {
         $ps = connectDB()->prepare($sql);
     }
@@ -94,8 +91,10 @@ function createMedia($typeMedia, $nomMedia, $creationDate)
         $ps->bindParam(':TYPEMEDIA', $typeMedia, PDO::PARAM_STR);
         $ps->bindParam(':NOMMEDIA', $nomMedia, PDO::PARAM_STR);
         $ps->bindParam(':CREATIONDATE', $creationDate, PDO::PARAM_STR);
+        $ps->bindParam(':IDPOST', $id, PDO::PARAM_INT);
         $answer = $ps->execute();
     } catch (PDOException $e) {
+        error_log(json_encode($e));
         echo $e->getMessage();
     }
     return $answer;
