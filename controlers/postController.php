@@ -69,7 +69,7 @@ switch ($action) {
 include('vues/post.php');
 
 
-var_dump($_FILES);
+//var_dump($_FILES);
 
 
 ?>

@@ -11,7 +11,7 @@
 							<!-- main col right -->
 							<div class="col-sm-12">
 								<div class="form-group">
-									<textarea class="form-control"  name="commentaire" id="commentaire" rows="5"></textarea>
+									<textarea class="form-control"  name="commentaire" id="commentaire" rows="5"></textarea>	
 								</div>
 								<div class="form-group">
 									<input type="file" class="form-control-file" id="fileToUpload" name="fileToUpload[]" accept="image/png, image/gif, image/jpeg" multiple/>
