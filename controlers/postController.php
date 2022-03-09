@@ -20,7 +20,7 @@ switch ($action) {
             if (isset($_POST["submit"])) {
                 $verification = getimagesize($_FILES["fileToUpload"]["tmp_name"][$i]);
                 if ($verification !== false) {
-                    $message = "Le fichier est de type " . $verification["mime"] . ".";
+                    $message = "Le fichier est de type " . $verification["mime"] . "."; 
                     $validation = 1;
                 } else {
                     $message = "Le fichier n'est pas une image";

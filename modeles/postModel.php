@@ -91,7 +91,7 @@ function createMedia($typeMedia, $nomMedia, $creationDate, $idPost)
         $ps->bindParam(':TYPEMEDIA', $typeMedia, PDO::PARAM_STR);
         $ps->bindParam(':NOMMEDIA', $nomMedia, PDO::PARAM_STR);
         $ps->bindParam(':CREATIONDATE', $creationDate, PDO::PARAM_STR);
-        $ps->bindParam(':IDPOST', $id, PDO::PARAM_INT);
+        $ps->bindParam(':IDPOST', $idPost, PDO::PARAM_INT);
         $answer = $ps->execute();
     } catch (PDOException $e) {
         error_log(json_encode($e));

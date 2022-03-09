@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="panel panel-default">
-					<div class="panel-thumbnail"><img src="media/img/bg_4.jpg" class="img-responsive"></div>
+				<?php echo PostAndMediaToCarousel() ?>
 					<div class="panel-body">
 						<p class="lead">Social Good</p>
 						<p>1,200 Followers, 83 Posts</p>
@@ -58,6 +58,7 @@
 					</div>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 </div>
