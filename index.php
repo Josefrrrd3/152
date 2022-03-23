@@ -22,7 +22,9 @@ switch ($uc) {
     case 'post':
         require('controlers/postController.php');
         break;
+    case 'delete':
+        require("controlers/deleteController.php");
+        break;
 }
 //Inclure le footer
 include("vues/footer.php");
-

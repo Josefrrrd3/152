@@ -14,7 +14,7 @@
 									<textarea class="form-control"  name="commentaire" id="commentaire" rows="5"></textarea>	
 								</div>
 								<div class="form-group">
-									<input type="file" class="form-control-file" id="fileToUpload" name="fileToUpload[]" accept="image/png, image/gif, image/jpeg" multiple/>
+									<input type="file" class="form-control-file" id="fileToUpload" name="fileToUpload[]" accept="image/png, image/gif, image/jpeg, audio/wav, audio/mp3, video/mp4" multiple/>
 								</div>
 								<button type="submit" name="action" value="submit" class="btn btn-primary">Submit</button>
 							</div>

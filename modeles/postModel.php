@@ -1,29 +1,4 @@
 <?php
-
-function createPost($commentaire, $creationDate)
-{
-    $sql = "INSERT INTO `dbM152`.`post` (`commentaire`, `creationDate`) ";
-    $sql .= "VALUES (:COMMENTAIRE, :CREATIONDATE)";
-    $pdo = connectDB();
-    $ps = $pdo->prepare($sql);
-    try {
-        $ps->bindParam(':COMMENTAIRE', $commentaire, PDO::PARAM_STR);
-        $ps->bindParam(':CREATIONDATE', $creationDate, PDO::PARAM_STR);
-        //$ps->bindParam(':CREATIONDATE', $creationDate, date("Y-m-d H:i:s"));
-        $ps->execute();
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-    }
-    return $pdo->lastInsertId();
-}
-
-/**
- * Met à jour une note existante 
- * @param mixed $idPost
- * @param mixed $commentaire
- * @param mixed $modificationDate 
- * @return bool 
- */
 function updatePost($idPost, $commentaire, $modificationDate)
 {
     static $ps = null;
@@ -48,11 +23,6 @@ function updatePost($idPost, $commentaire, $modificationDate)
     return $answer;
 }
 
-/**
- * Supprime la post avec l'id $idPost.
- * @param mixed $idPost
- * @return bool 
- */
 function deletePost($idPost)
 {
     static $ps = null;
@@ -70,43 +40,55 @@ function deletePost($idPost)
     }
     return $answer;
 }
-
-/**
- * Ajoute une nouvelle média avec ses paramètres
- * @param mixed $typeMedia Le type du média
- * @param mixed $nomMedia Le nom du média
- * @param mixed $creationDate  La date de création du média
- * @return bool true si réussi
- */
-function createMedia($typeMedia, $nomMedia, $creationDate, $idPost)
+function getLastId()
 {
     static $ps = null;
-    $sql = "INSERT INTO `dbM152`.`media` (`typeMedia`, `nomMedia`, `creationDate`, `idPost`) ";
-    $sql .= "VALUES (:TYPEMEDIA, :NOMMEDIA, :CREATIONDATE, :IDPOST)";
+    $sql = 'SELECT MAX(idPost) ';
+    $sql .= 'FROM dbM152.post';
     if ($ps == null) {
         $ps = connectDB()->prepare($sql);
     }
     $answer = false;
     try {
-        $ps->bindParam(':TYPEMEDIA', $typeMedia, PDO::PARAM_STR);
-        $ps->bindParam(':NOMMEDIA', $nomMedia, PDO::PARAM_STR);
-        $ps->bindParam(':CREATIONDATE', $creationDate, PDO::PARAM_STR);
-        $ps->bindParam(':IDPOST', $idPost, PDO::PARAM_INT);
-        $answer = $ps->execute();
+        if ($ps->execute())
+            $answer = $ps->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
-        error_log(json_encode($e));
         echo $e->getMessage();
+    }
+    return $answer[0]["MAX(idPost)"];
+}
+function createMediaAndPost($typeMedia, $nomMedia, $creationDate, $commentaire)
+{
+    static $ps = null;
+    $answer = false;
+    try {
+        connectDB()->beginTransaction();
+        $sql = "INSERT INTO `dbM152`.`post` (`commentaire`, `creationDate`) ";
+        $sql .= "VALUES (:COMMENTAIRE, :CREATIONDATE)";
+        $ps = connectDB()->prepare($sql);
+        $ps->bindParam(':COMMENTAIRE', $commentaire, PDO::PARAM_STR);
+        $ps->bindParam(':CREATIONDATE', $creationDate, PDO::PARAM_STR);
+        $answer = $ps->execute();
+        $ps->close;
+        
+            $sql = "INSERT INTO `dbM152`.`media` (`typeMedia`, `nomMedia`, `creationDate`, `idPost`) ";
+            $sql .= "VALUES (:TYPEMEDIA, :NOMMEDIA, :CREATIONDATE, :IDPOST)";
+            $ps = connectDB()->prepare($sql);
+            $ps->bindParam(':TYPEMEDIA', $typeMedia, PDO::PARAM_STR);
+            $ps->bindParam(':NOMMEDIA', $nomMedia, PDO::PARAM_STR);
+            $ps->bindParam(':CREATIONDATE', $creationDate, PDO::PARAM_STR);
+            $ps->bindParam(':IDPOST', getLastId(), PDO::PARAM_INT);
+            $answer = $ps->execute();
+            $ps->close;
+        
+        connectDB()->commit();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+        connectDB()->rollBack();
     }
     return $answer;
 }
 
-/**
- * Met à jour une média existante 
- * @param mixed $idPost
- * @param mixed $commentaire
- * @param mixed $modificationDate 
- * @return bool 
- */
 function updateMedia($idMedia, $typeMedia, $nomMedia, $modificationDate)
 {
     static $ps = null;
@@ -133,11 +115,6 @@ function updateMedia($idMedia, $typeMedia, $nomMedia, $modificationDate)
     return $answer;
 }
 
-/**
- * Supprime la note avec l'id $idMedia.
- * @param mixed $idMedia
- * @return bool 
- */
 function deleteMedia($idMedia)
 {
     static $ps = null;
@@ -155,5 +132,3 @@ function deleteMedia($idMedia)
     }
     return $answer;
 }
-
-?>

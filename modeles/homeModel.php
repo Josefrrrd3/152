@@ -59,15 +59,14 @@ function readPostAndMediaWithId($id)
     return $answer;
 }
 
-function PostAndMediaToCarousel()
+function ShowMedia()
 {
     $html = "";
     $array = getCountFromDifferentIdPost();
     if (!empty($array)) {
         // Chaque ligne
         for ($i = getLastId(); $i > 0; $i--) {
-            $arrayMedia = readPostAndMediaWithId($i);
-            $html .= "\n <div class=\"panel panel-default\">";
+            $Media = readPostAndMediaWithId($i);
             $html .= "\n <div id=\"my-pics$i\" class=\"carousel slide\" data-ride=\"carousel\" data-interval=\"false\" style=\"margin:auto;\" >";
 
             $html .= "\n <ol class=\"carousel-indicators\">";
@@ -85,20 +84,20 @@ function PostAndMediaToCarousel()
                 } else {
                     $html .= "\n <div align=\"center\" class=\"item\">";
                 }
-                if ($arrayMedia[$k]["typeMedia"] == "mp4" || $arrayMedia[$k]["typeMedia"] == "m4v") {
+                if ($Media[$k]["typeMedia"] == "mp4" || $Media[$k]["typeMedia"] == "m4v") {
                     $html .= "\n <video width=\"100%\" height=\"100%\" autoplay loop controls>";
-                    $html .= "\n <source src=\"media/imgdownload/" . $arrayMedia[$k]["nomMedia"] . "\" type=\"video/mp4\">";
+                    $html .= "\n <source src=\"media/imgdownload/" . $Media[$k]["nomMedia"] . "\" type=\"video/mp4\">";
                     $html .= "\n </video>";
                     $html .= "\n </div>";
                 }
-                if ($arrayMedia[$k]["typeMedia"] == "png" || $arrayMedia[$k]["typeMedia"] == "jpg" || $arrayMedia[$k]["typeMedia"] == "jpeg" || $arrayMedia[$k]["typeMedia"] == "gif" || $arrayMedia[$k]["typeMedia"] == "jpg") {
-                    $html .= "\n <img src=\"media/imgdownload/" . $arrayMedia[$k]["nomMedia"] . "\" alt=\"" . $arrayMedia[$k]["nomMedia"] . "\">";
+                if ($Media[$k]["typeMedia"] == "png" || $Media[$k]["typeMedia"] == "jpg" || $Media[$k]["typeMedia"] == "jpeg" || $Media[$k]["typeMedia"] == "gif" || $Media[$k]["typeMedia"] == "jpg") {
+                    $html .= "\n <img src=\"media/imgdownload/" . $Media[$k]["nomMedia"] . "\" alt=\"" . $Media[$k]["nomMedia"] . "\">";
                     $html .= "\n </div>";
                 }
 
-                if ($arrayMedia[$k]["typeMedia"] == "mp3" || $arrayMedia[$k]["typeMedia"] == "wav" || $arrayMedia[$k]["typeMedia"] == "ogg") {
+                if ($Media[$k]["typeMedia"] == "mp3" || $Media[$k]["typeMedia"] == "wav" || $Media[$k]["typeMedia"] == "ogg") {
                     $html .= "\n <audio controls autoplay";
-                    $html .= "\n <source src=\"media/imgdownload/" . $arrayMedia[$k]["nomMedia"] . "\" type=\"video/mp4\">";
+                    $html .= "\n <source src=\"media/imgdownload/" . $Media[$k]["nomMedia"] . "\" type=\"audio/mp3\">";
                     $html .= "\n </audio>";
                     $html .= "\n </div>";
                 }
@@ -120,22 +119,13 @@ function PostAndMediaToCarousel()
             $html .= "\n </div>";
 
             $html .= "\n <div class=\"panel-body\">";
+            $html .= "\n " . $Media[0]["commentaire"];
+            $html .= "\n <a><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></span></a>";
+            $html .= "\n <a href=\"?uc=delete&id=".$i."\" role=\"button\" data-toggle=\"modal\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></a>";
             $html .= "\n <hr>";
-            $html .= "\n " . $arrayMedia[0]["commentaire"];
-            $html .= "\n <a ><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></span></a>";
-            $html .= "\n <a><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></a>";
-            $html .= "\n </div>";
-
             $html .= "\n </div>";
         }
     }
     return $html;
 }
-
-
-
-
-
-
-
 ?>

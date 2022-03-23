@@ -41,12 +41,7 @@
 			</div>
 			<div class="col-sm-7">
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h1>Bienvenu</h1>
-					</div>
-				</div>
-				<div class="panel panel-default">
-				<?php echo PostAndMediaToCarousel() ?>
+				<?php echo ShowMedia() ?>
 					<div class="panel-body">
 						<p class="lead">Social Good</p>
 						<p>1,200 Followers, 83 Posts</p>
